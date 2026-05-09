@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>People Analytics Dashboard | Philippine Workforce Insights</title>
-    <meta name="description" content="Interactive data visualization dashboard for Philippine workforce analytics featuring decision tree, clustering, and regression analysis.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Data Mining Finals | Philippine Workforce Insights</title>
+    <meta name="description"
+        content="Interactive data visualization dashboard for Philippine workforce analytics featuring decision tree, clustering, and regression analysis.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 </head>
+
 <body>
     <!-- Ambient background particles -->
     <div class="ambient-bg">
@@ -26,40 +31,71 @@
                 <div class="logo-icon">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
                         <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#logoGrad)" />
-                        <path d="M10 22V14L16 10L22 14V22L16 18L10 22Z" fill="white" opacity="0.9"/>
-                        <defs><linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
-                            <stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/>
-                        </linearGradient></defs>
+                        <path d="M10 22V14L16 10L22 14V22L16 18L10 22Z" fill="white" opacity="0.9" />
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                                <stop stop-color="#6366f1" />
+                                <stop offset="1" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
                     </svg>
                 </div>
                 <div>
-                    <h1 class="logo-text">People Analytics</h1>
+                    <h1 class="logo-text">Data Mining Finals</h1>
                     <span class="logo-subtitle">Philippine Workforce Insights</span>
                 </div>
             </div>
             <nav class="nav-tabs" id="navTabs">
                 <button class="nav-tab active" data-tab="overview" id="tab-overview">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                    </svg>
                     Overview
                 </button>
                 <button class="nav-tab" data-tab="demographics" id="tab-demographics">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
                     Demographics
                 </button>
                 <button class="nav-tab" data-tab="performance" id="tab-performance">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
                     Performance
                 </button>
                 <button class="nav-tab" data-tab="decision-tree" id="tab-decision-tree">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><line x1="12" y1="14" x2="6" y2="14"/><line x1="12" y1="14" x2="18" y2="14"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="5" r="3" />
+                        <line x1="12" y1="8" x2="12" y2="14" />
+                        <circle cx="6" cy="17" r="3" />
+                        <circle cx="18" cy="17" r="3" />
+                        <line x1="12" y1="14" x2="6" y2="14" />
+                        <line x1="12" y1="14" x2="18" y2="14" />
+                    </svg>
                     Decision Tree
                 </button>
                 <button class="nav-tab" data-tab="clustering" id="tab-clustering">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="7" cy="7" r="3" />
+                        <circle cx="17" cy="7" r="3" />
+                        <circle cx="7" cy="17" r="3" />
+                        <circle cx="17" cy="17" r="3" />
+                    </svg>
                     Clustering
                 </button>
                 <button class="nav-tab" data-tab="regression" id="tab-regression">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
                     Regression
                 </button>
             </nav>
@@ -115,31 +151,43 @@
             </div>
             <div class="chart-grid-2">
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Department Distribution</h3></div>
+                    <div class="chart-header">
+                        <h3>Department Distribution</h3>
+                    </div>
                     <div class="chart-container"><canvas id="deptChart"></canvas></div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Education Level</h3></div>
+                    <div class="chart-header">
+                        <h3>Education Level</h3>
+                    </div>
                     <div class="chart-container"><canvas id="educChart"></canvas></div>
                 </div>
             </div>
             <div class="chart-grid-2">
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Gender Split</h3></div>
+                    <div class="chart-header">
+                        <h3>Gender Split</h3>
+                    </div>
                     <div class="chart-container"><canvas id="genderChart"></canvas></div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Regional Distribution</h3></div>
+                    <div class="chart-header">
+                        <h3>Regional Distribution</h3>
+                    </div>
                     <div class="chart-container"><canvas id="regionChart"></canvas></div>
                 </div>
             </div>
             <div class="chart-grid-2">
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Employment Type</h3></div>
+                    <div class="chart-header">
+                        <h3>Employment Type</h3>
+                    </div>
                     <div class="chart-container"><canvas id="empTypeChart"></canvas></div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Age Distribution</h3></div>
+                    <div class="chart-header">
+                        <h3>Age Distribution</h3>
+                    </div>
                     <div class="chart-container"><canvas id="ageChart"></canvas></div>
                 </div>
             </div>
@@ -153,26 +201,36 @@
             </div>
             <div class="chart-grid-2">
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Performance Rating Distribution</h3></div>
+                    <div class="chart-header">
+                        <h3>Performance Rating Distribution</h3>
+                    </div>
                     <div class="chart-container"><canvas id="perfRatingChart"></canvas></div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Attrition by Department</h3></div>
+                    <div class="chart-header">
+                        <h3>Attrition by Department</h3>
+                    </div>
                     <div class="chart-container"><canvas id="attrDeptChart"></canvas></div>
                 </div>
             </div>
             <div class="chart-grid-2">
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Salary by Department</h3></div>
+                    <div class="chart-header">
+                        <h3>Salary by Department</h3>
+                    </div>
                     <div class="chart-container"><canvas id="salaryDeptChart"></canvas></div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-header"><h3>Tenure vs Salary</h3></div>
+                    <div class="chart-header">
+                        <h3>Tenure vs Salary</h3>
+                    </div>
                     <div class="chart-container"><canvas id="tenureSalaryChart"></canvas></div>
                 </div>
             </div>
             <div class="chart-card full-width">
-                <div class="chart-header"><h3>Shift Distribution</h3></div>
+                <div class="chart-header">
+                    <h3>Shift Distribution</h3>
+                </div>
                 <div class="chart-container"><canvas id="shiftChart"></canvas></div>
             </div>
         </section>
@@ -288,9 +346,11 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>People Analytics Dashboard &bull; Data Mining Final Examination &bull; Philippine Workforce Dataset (5,025 Records)</p>
+        <p>Data Mining Finals Dashboard &bull; Data Mining Final Examination &bull; Philippine Workforce Dataset (5,025
+            Records)</p>
     </footer>
 
     <script src="app.js"></script>
 </body>
+
 </html>
