@@ -9,7 +9,7 @@
         content="Interactive data visualization dashboard for Philippine workforce analytics featuring decision tree, clustering, and regression analysis.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260509">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
@@ -54,6 +54,12 @@
                         <rect x="14" y="14" width="7" height="7" rx="1" />
                     </svg>
                     Overview
+                </button>
+                <button class="nav-tab" data-tab="preprocessing" id="tab-preprocessing">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    </svg>
+                    Preprocessing
                 </button>
                 <button class="nav-tab" data-tab="demographics" id="tab-demographics">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -139,6 +145,52 @@
                 </div>
                 <div class="quality-grid" id="qualityGrid">
                     <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PREPROCESSING TAB -->
+        <section class="tab-content" id="content-preprocessing">
+            <div class="section-header">
+                <h2>Data Preprocessing & Engineering</h2>
+                <p>The foundation of the analysis: how the raw dataset was cleaned, standardized, and enriched.</p>
+            </div>
+
+            <div class="kpi-grid" id="prepKpiGrid">
+                <!-- Filled by JS -->
+            </div>
+
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>1. Data Sanitization</h3>
+                        <span class="chart-badge">Cleanup</span>
+                    </div>
+                    <div class="quality-grid" id="sanitizationGrid">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>2. Imputation Strategy</h3>
+                        <span class="chart-badge">Missing Values</span>
+                    </div>
+                    <div class="tree-rules" id="imputationInfo" style="font-family: inherit; font-size: 14px; line-height: 1.6; max-height: none;">
+                        <p><strong>Numerical Columns:</strong> Used group-based median imputation. Salary and performance scores were imputed based on the median of the employee's department and job level to preserve regional/functional variances.</p>
+                        <hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--border-color);">
+                        <p><strong>Categorical Columns:</strong> Used mode-based imputation for missing categories like Region or Employment Type.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card full-width" style="margin-top: 20px;">
+                <div class="chart-header">
+                    <h3>3. Advanced Feature Engineering</h3>
+                    <span class="chart-badge">Innovation</span>
+                </div>
+                <div class="cluster-profiles" id="engineeringGrid">
+                    <!-- Filled by JS -->
                 </div>
             </div>
         </section>
@@ -350,7 +402,7 @@
             Records)</p>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=20260509"></script>
 </body>
 
 </html>
