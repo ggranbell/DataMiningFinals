@@ -1,0 +1,147 @@
+{
+  "total_records": 5000,
+  "total_features": 30,
+  "numerical_summary": {
+    "Age": {
+      "mean": 45.144,
+      "median": 45.0,
+      "std": 9.7295733164093,
+      "min": 22.0,
+      "max": 200.0
+    },
+    "Tenure_Years": {
+      "mean": 14.79096,
+      "median": 13.350000000000001,
+      "std": 7.662139907101096,
+      "min": 1.2,
+      "max": 30.0
+    },
+    "Monthly_Salary_PHP": {
+      "mean": 45153.95,
+      "median": 43500.0,
+      "std": 13553.994025685184,
+      "min": 15000.0,
+      "max": 101500.0
+    },
+    "Performance_Score": {
+      "mean": 3.3525400000000003,
+      "median": 3.4,
+      "std": 1.0882308567944285,
+      "min": 1.0,
+      "max": 5.0
+    },
+    "Training_Hours_YTD": {
+      "mean": 38.8216,
+      "median": 39.0,
+      "std": 13.003799183263318,
+      "min": 0.0,
+      "max": 80.0
+    },
+    "Absences_YTD": {
+      "mean": 11.3664,
+      "median": 11.0,
+      "std": 4.283949285915609,
+      "min": 0.0,
+      "max": 30.0
+    },
+    "Overtime_Hours_Monthly": {
+      "mean": 19.0948,
+      "median": 19.0,
+      "std": 8.887362375980874,
+      "min": 0.0,
+      "max": 49.0
+    },
+    "Distance_Office_KM": {
+      "mean": 86.5784,
+      "median": 38.0,
+      "std": 103.8976900582486,
+      "min": 4.0,
+      "max": 300.0
+    },
+    "Job_Satisfaction_Score": {
+      "mean": 4.192480000000001,
+      "median": 4.2,
+      "std": 1.7425276841835338,
+      "min": 1.0,
+      "max": 10.0
+    },
+    "Work_Life_Balance_Score": {
+      "mean": 4.7668800000000005,
+      "median": 4.8,
+      "std": 1.6176879947906202,
+      "min": 1.0,
+      "max": 10.0
+    },
+    "Num_Promotions": {
+      "mean": 3.0846,
+      "median": 3.0,
+      "std": 2.0961683196549044,
+      "min": 0.0,
+      "max": 8.0
+    },
+    "Prev_Companies": {
+      "mean": 1.4644,
+      "median": 1.0,
+      "std": 1.4981260014775994,
+      "min": 0.0,
+      "max": 8.0
+    }
+  },
+  "categorical_summary": {
+    "Gender": {
+      "Female": 2856,
+      "Male": 2144
+    },
+    "Marital_Status": {
+      "Single": 2251,
+      "Married": 1912,
+      "Separated": 490,
+      "Widowed": 347
+    },
+    "Region": {
+      "NCR": 1792,
+      "Region IV-A": 1042,
+      "Region III": 760,
+      "Region VII": 467,
+      "Region XI": 392,
+      "Region I": 215,
+      "CAR": 199,
+      "Region VI": 133
+    },
+    "Education_Level": {
+      "Bachelor": 2526,
+      "Master": 1151,
+      "Vocational": 765,
+      "High School": 396,
+      "PhD": 162
+    },
+    "Department": {
+      "Operations": 1283,
+      "Sales": 904,
+      "Customer Service": 627,
+      "IT": 617,
+      "Finance": 459,
+      "Marketing": 450,
+      "HR": 404,
+      "Legal/Compliance": 256
+    },
+    "Employment_Type": {
+      "Regular": 2941,
+      "Contractual": 1430,
+      "Project-based": 629
+    },
+    "Shift": {
+      "Morning": 1440,
+      "Night": 1434,
+      "Afternoon": 1240,
+      "Graveyard": 886
+    },
+    "Performance_Rating": {
+      "Meets Expectations": 1992,
+      "Exceeds Expectations": 1734,
+      "Outstanding": 649,
+      "Needs Improvement": 625
+    }
+  },
+  "attrition_rate": 55.82
+}
