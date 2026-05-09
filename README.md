@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>📊 Aegis Workforce</h1>
+  <h1>📊 Data Mining Finals</h1>
   <p>
     <b>A Premium Predictive Modeling Suite for Strategic Human Capital Management and Attrition Forecasting.</b>
   </p>
@@ -15,7 +15,7 @@
 
 ## 📖 Overview
 
-**Aegis Workforce** is an end-to-end data mining ecosystem designed to transform raw HR data into actionable organizational intelligence. By leveraging advanced machine learning architectures, the platform provides high-precision forecasting for employee attrition, salary benchmarks, and behavioral segmentation. It features a robust automated preprocessing engine and a sleek, glassmorphic analytics dashboard for real-time visualization of workforce health.
+**Data Mining Finals** is an end-to-end data mining ecosystem designed to transform raw HR data into actionable organizational intelligence. By leveraging advanced machine learning architectures, the platform provides high-precision forecasting for employee attrition, salary benchmarks, and behavioral segmentation. It features a robust automated preprocessing engine and a sleek, glassmorphic analytics dashboard for real-time visualization of workforce health.
 
 ## ✨ Features
 
@@ -44,12 +44,14 @@
 ### Installation & Execution
 
 1. **Initialize the Pipeline**
+
    ```bash
    # Install required analytics packages
    pip install pandas numpy scikit-learn scipy imbalanced-learn
    ```
 
 2. **Run the Analysis Orchestrator**
+
    ```bash
    # Run full modeling pipeline (Preprocessing -> Models -> Export)
    set PYTHONIOENCODING=utf-8
@@ -57,6 +59,7 @@
    ```
 
 3. **Launch the Visualization Suite**
+
    ```bash
    # Open the dashboard locally
    python -m http.server 8765
@@ -66,26 +69,27 @@
 ## 📂 Project Architecture
 
 ```text
-AegisWorkforce/
+DataMiningFinals/
 ├── Data Mining_Workforce_Dataset.csv   # Raw source data
 ├── analysis/                          # Backend Analytics Engine
-│   ├── data_preprocessing.py          # Data Sanitizer & Feature Engineering
-│   ├── decision_tree.py               # Attrition Classification (SMOTE)
-│   ├── hierarchical_clustering.py     # Employee Segmentation (Agglomerative)
-│   ├── regularized_regression.py      # Salary Prediction (Lasso/Ridge)
-│   └── run_analysis.py                # Main Orchestrator
 ├── output/                            # Model Result Artifacts
-│   ├── cleaned_dataset.csv            # Standardized data
-│   └── *_results.json                 # Model performance metadata
 └── dashboard/                         # Premium Visualization UI
-    ├── index.html                     # Main Dashboard Entry
-    ├── styles.css                     # Glassmorphic Design Tokens
-    └── app.js                         # Dynamic Chart Logic
 ```
+
+### 📖 Technical Documentation
+
+Detailed documentation for each analytical module:
+
+- 🛠️ [**Data Preprocessing**](analysis/data_preprocessing.md): Cleaning, imputation, and feature engineering logic.
+- 🌳 [**Decision Tree**](analysis/decision_tree.md): Attrition classification using SMOTE and cost-complexity pruning.
+- 🧬 [**Hierarchical Clustering**](analysis/hierarchical_clustering.md): Workforce segmentation using QuantileTransformers and multi-linkage optimization.
+- 📉 [**Regularized Regression**](analysis/regularized_regression.md): Salary prediction using Lasso/Ridge with interaction features.
+- ⚙️ [**Analysis Orchestrator**](analysis/run_analysis.md): Main execution pipeline and system architecture.
 
 ## 🎨 Model Specifics
 
 ### Salary Prediction Engine (`regularized_regression.py`)
+
 | Model | R² | Adj R² | MAE (₱) |
 |-------|-----|--------|---------|
 | Lasso | **0.9110** | **0.9033** | **3,281** |
@@ -94,6 +98,7 @@ AegisWorkforce/
 - **Log-Scaling**: Normalizing target distributions to handle financial skew effectively.
 
 ### Employee Segmentation (`hierarchical_clustering.py`)
+
 | Metric | Value |
 |--------|-------|
 | **Silhouette Score** | **0.5287** |
@@ -103,4 +108,5 @@ AegisWorkforce/
 - **Persona Identification**: Automatically segmenting the workforce into 4 distinct behavioral cohorts.
 
 ### Attrition Risk Engine (`decision_tree.py`)
+
 Features a custom-weighted **Stability Score** and **Risk Score** that achieves **84.8% AUC** and **80.2% F1**, significantly outperforming baseline models.
