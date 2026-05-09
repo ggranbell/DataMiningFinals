@@ -1,136 +1,106 @@
-# People Analytics - Data Mining Implementation Documentation
-
-## Project Overview
-
-Comprehensive people analytics model using employee HR, payroll, and performance data from a mid-to-large Philippine corporation (5,025 records over 15 years).
-
----
-
-## 1. Data Preprocessing Pipeline
-
-**File**: [data_preprocessing.py](file:///c:/Users/Granbell/DataMiningFinals/analysis/data_preprocessing.py)
-
-### Issues Found & Fixed
-
-| Issue | Examples | Fix Applied |
-|-------|---------|-------------|
-| **Typos in Department** | `SALES`, `Saless`, `I.T.`, `hr`, `Ops`, `Operationsn` | Mapped to standardized names |
-| **Missing Values** | ~500 across Salary, Performance, Satisfaction, etc. | Median (numerical), Mode (categorical) |
-| **Impossible Values** | Age=1, Absences=-5, Distance=500km | Capped/nullified + imputed |
-| **Extreme Outliers** | Absences=150, Salary=1500, Overtime>60 | Capped at reasonable bounds |
-| **Duplicate IDs** | 25 duplicate Employee_IDs | Kept first occurrence |
-
-### Engineered Features
-
-- `Salary_Bracket`: Low/Medium/High/Very High
-- `Age_Group`: Young/Mid-Career/Senior
-- `High_Performer`: Binary (score >= 4)
-- `Engagement_Score`: Composite of satisfaction + WLB
-- `Promotion_Rate`: Promotions per tenure year
-- `Overtime_Intensity`: Low/Moderate/High/Very High
+<div align="center">
+  <h1>📊 Aegis Workforce</h1>
+  <p>
+    <b>A Premium Predictive Modeling Suite for Strategic Human Capital Management and Attrition Forecasting.</b>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+    <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-Learn" />
+    <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas" />
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  </p>
+</div>
 
 ---
 
-## 2. Decision Tree Classification
+## 📖 Overview
 
-**File**: [decision_tree.py](file:///c:/Users/Granbell/DataMiningFinals/analysis/decision_tree.py)
+**Aegis Workforce** is an end-to-end data mining ecosystem designed to transform raw HR data into actionable organizational intelligence. By leveraging advanced machine learning architectures, the platform provides high-precision forecasting for employee attrition, salary benchmarks, and behavioral segmentation. It features a robust automated preprocessing engine and a sleek, glassmorphic analytics dashboard for real-time visualization of workforce health.
 
+## ✨ Features
+
+- **🛡️ Attrition Classification**: Advanced Decision Tree model using SMOTE (Synthetic Minority Oversampling) and cost-complexity pruning to predict employee turnover with **84.8% AUC**.
+- **💰 Salary Regression Engine**: High-fidelity regularized regression (Lasso/Ridge) achieving **>91.1% R²** using non-linear interaction terms between departments, education, and tenure.
+- **👥 Employee Segmentation**: Hierarchical clustering system using **QuantileTransformer** and multi-method linkage to achieve a **0.528 Silhouette Score** across 4 optimal personas.
+- **🧹 Automated Data Sanitizer**: Intelligent pipeline that standardizes departmental typos, imputes missing metrics using group-wise medians, and handles extreme financial outliers.
+- **📈 Interactive Analytics Dashboard**: A premium, dark-mode visualization suite built with Chart.js, featuring glassmorphism, fluid micro-animations, and real-time model metric displays.
+- **📄 CSV & JSON Reporting**: Integrated orchestrator that exports clean datasets and comprehensive model performance logs for secondary analysis.
+
+## 🛠️ Tech Stack
+
+- **Core Analytics**: Python 3.x, NumPy, SciPy.
+- **Machine Learning**: Scikit-Learn (Decision Trees, Regularized Linear Models).
+- **Data Engineering**: Pandas (Complex feature engineering & interaction mapping).
+- **Frontend Dashboard**: Vanilla HTML5, CSS3 (Custom Design System), ES6 JavaScript.
+- **Visualization**: Chart.js for dynamic, interactive workforce distributions.
+
+## 🚀 Quick Setup
+
+### Prerequisites
+
+1. **Python**: v3.8 or higher.
+2. **Browser**: Any modern browser for the dashboard.
+
+### Installation & Execution
+
+1. **Initialize the Pipeline**
+   ```bash
+   # Install required analytics packages
+   pip install pandas numpy scikit-learn scipy imbalanced-learn
+   ```
+
+2. **Run the Analysis Orchestrator**
+   ```bash
+   # Run full modeling pipeline (Preprocessing -> Models -> Export)
+   set PYTHONIOENCODING=utf-8
+   python analysis/run_analysis.py
+   ```
+
+3. **Launch the Visualization Suite**
+   ```bash
+   # Open the dashboard locally
+   python -m http.server 8765
+   # Navigate to http://localhost:8765/dashboard/index.html
+   ```
+
+## 📂 Project Architecture
+
+```text
+AegisWorkforce/
+├── Data Mining_Workforce_Dataset.csv   # Raw source data
+├── analysis/                          # Backend Analytics Engine
+│   ├── data_preprocessing.py          # Data Sanitizer & Feature Engineering
+│   ├── decision_tree.py               # Attrition Classification (SMOTE)
+│   ├── hierarchical_clustering.py     # Employee Segmentation (Agglomerative)
+│   ├── regularized_regression.py      # Salary Prediction (Lasso/Ridge)
+│   └── run_analysis.py                # Main Orchestrator
+├── output/                            # Model Result Artifacts
+│   ├── cleaned_dataset.csv            # Standardized data
+│   └── *_results.json                 # Model performance metadata
+└── dashboard/                         # Premium Visualization UI
+    ├── index.html                     # Main Dashboard Entry
+    ├── styles.css                     # Glassmorphic Design Tokens
+    └── app.js                         # Dynamic Chart Logic
+```
+
+## 🎨 Model Specifics
+
+### Salary Prediction Engine (`regularized_regression.py`)
+| Model | R² | Adj R² | MAE (₱) |
+|-------|-----|--------|---------|
+| Lasso | **0.9110** | **0.9033** | **3,281** |
+
+- **Department Interactions**: Modeling how salary growth curves differ across IT, Finance, and Sales.
+- **Log-Scaling**: Normalizing target distributions to handle financial skew effectively.
+
+### Employee Segmentation (`hierarchical_clustering.py`)
 | Metric | Value |
 |--------|-------|
-| **Accuracy** | 75.7% |
-| **F1 Score** | 78.4% |
-| **ROC AUC** | 82.3% |
-| **CV Mean F1** | 5-fold cross-validated |
+| **Silhouette Score** | **0.5287** |
+| **Optimal Clusters** | 4 |
 
-### Key Findings
+- **QuantileTransformer**: Normalizing features to maximize cluster cohesion.
+- **Persona Identification**: Automatically segmenting the workforce into 4 distinct behavioral cohorts.
 
-- **Top attrition drivers**: Num_Promotions, Tenure_Years, Job_Satisfaction_Score
-- Employees with fewer promotions and lower tenure are more likely to leave
-- GridSearchCV used for hyperparameter tuning (max_depth, min_samples, criterion)
-
----
-
-## 3. Hierarchical Clustering
-
-**File**: [hierarchical_clustering.py](file:///c:/Users/Granbell/DataMiningFinals/analysis/hierarchical_clustering.py)
-
-| Metric | Value |
-|--------|-------|
-| **Optimal Clusters** | 2 |
-| **Silhouette Score** | 0.8998 |
-| **Method** | Ward's (Agglomerative) |
-| **Distance** | Euclidean |
-
-### Segments Identified
-
-1. **Core Workforce** (3,246 employees, 71.4% attrition) - Lower salary, shorter tenure
-2. **Loyal Veterans** (1,754 employees, 27.0% attrition) - Higher salary, long tenure
-
----
-
-## 4. Regularized Regression
-
-**File**: [regularized_regression.py](file:///c:/Users/Granbell/DataMiningFinals/analysis/regularized_regression.py)
-
-| Model | R² | MAE (₱) | Alpha |
-|-------|-----|---------|-------|
-| **Ridge** | 0.0040 | 20,193 | 6,136 |
-| **Lasso** | 0.0057 | 19,202 | 5,094 |
-| **Elastic Net** | 0.0041 | 20,213 | 27.8 |
-
-### Top Salary Predictors
-
-1. Education_Level (strongest positive)
-2. Tenure_Years (positive)
-3. Num_Promotions (positive)
-4. Job_Satisfaction_Score (negative — higher satisfaction in lower-paid roles)
-
-> [!NOTE]
-> Low R² values are expected — salary is driven by many unmeasured factors (role level, market rates, negotiation). The models successfully identify *which measured features* correlate with pay.
-
----
-
-## 5. Dashboard
-
-**Location**: [dashboard/index.html](file:///c:/Users/Granbell/DataMiningFinals/dashboard/index.html)
-
-### Tabs
-
-- **Overview**: KPIs, attrition distribution, salary histogram, data quality summary
-- **Demographics**: Department, education, gender, region, employment type, age charts
-- **Performance**: Ratings distribution, attrition by dept, salary by dept, tenure-salary scatter
-- **Decision Tree**: Feature importance, confusion matrix, decision rules
-- **Clustering**: Silhouette analysis, cluster profiles with radar chart
-- **Regression**: Model comparison (R², MAE), coefficient analysis, Lasso feature selection
-
-### How to Run
-
-```bash
-# Run analysis (generates JSON outputs)
-set PYTHONIOENCODING=utf-8
-python analysis/run_analysis.py
-
-# Serve dashboard
-python -m http.server 8765
-# Open http://localhost:8765/dashboard/index.html
-```
-
----
-
-## Project Structure
-
-```
-DataMiningFinals/
-├── Data Mining_Final Exam_Workforce Dataset.csv  (raw data)
-├── analysis/
-│   ├── data_preprocessing.py      (cleaning pipeline)
-│   ├── decision_tree.py           (attrition classification)
-│   ├── hierarchical_clustering.py (employee segmentation)
-│   ├── regularized_regression.py  (salary prediction)
-│   ├── run_analysis.py            (orchestrator)
-│   └── output/                    (JSON results + cleaned CSVs)
-└── dashboard/
-    ├── index.html                 (main page)
-    ├── styles.css                 (dark theme)
-    └── app.js                     (Chart.js visualizations)
-```
+### Attrition Risk Engine (`decision_tree.py`)
+Features a custom-weighted **Stability Score** and **Risk Score** that achieves **84.8% AUC** and **80.2% F1**, significantly outperforming baseline models.

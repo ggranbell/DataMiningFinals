@@ -344,14 +344,23 @@ def feature_engineering(df):
     """
     Step 5: Create derived features for enhanced analysis.
     
-    New Features:
-    - Hire_Year: Year of hire (extracted from Hire_Date)
-    - Years_Since_Hire: Approximate tenure verification
-    - Salary_Bracket: Low/Medium/High/Very High salary categories
-    - Age_Group: Young/Mid-Career/Senior
-    - Performance_Category: Binary (High=1 if score >= 4, Low=0)
-    - Engagement_Score: Composite of satisfaction + work-life balance
-    - Promotion_Rate: Promotions per year of tenure
+    Core Features:
+    - Hire_Year, Salary_Bracket, Age_Group, High_Performer
+    - Engagement_Score, Promotion_Rate, Overtime_Intensity
+    
+    Advanced Interaction Features (v2 - for improved model accuracy):
+    - Tenure_Squared: Captures non-linear salary growth with tenure
+    - Salary_Per_Tenure: Salary earned per year of service
+    - Dept_Salary_Ratio: Employee salary vs. department median
+    - Employment_Risk: Numeric risk score from Employment_Type
+    - Perf_Rating_Numeric: Numeric performance rating
+    - Satisfaction_x_Performance: Interaction of satisfaction and performance
+    - Tenure_x_Promotions: How promotions scale with tenure
+    - Absence_Rate: Normalized absences per tenure year
+    - Is_Regular: Binary flag for regular employment
+    - Shift_Risk: Numeric shift risk (graveyard > night > afternoon > morning)
+    - Salary_x_Satisfaction: Salary-satisfaction interaction
+    - Tenure_x_Education: Tenure weighted by education level
     """
     print("\n" + "=" * 70)
     print("STEP 5: FEATURE ENGINEERING")
@@ -396,8 +405,98 @@ def feature_engineering(df):
         labels=['Low', 'Moderate', 'High', 'Very High']
     )
     
-    print(f"  New features created: Hire_Year, Salary_Bracket, Age_Group, "
+    # =========================================================================
+    # ADVANCED INTERACTION FEATURES (v2)
+    # =========================================================================
+    
+    # Tenure squared - captures non-linear salary/attrition relationship
+    df['Tenure_Squared'] = df['Tenure_Years'] ** 2
+    
+    # Salary per year of tenure - compensation velocity
+    tenure_safe = df['Tenure_Years'].replace(0, 0.5)
+    df['Salary_Per_Tenure'] = df['Monthly_Salary_PHP'] / tenure_safe
+    
+    # Employment type risk score (Project-based 89% attrition, Regular 37%)
+    emp_risk = {'Regular': 0, 'Contractual': 1, 'Project-based': 2}
+    df['Employment_Risk'] = df['Employment_Type'].map(emp_risk).fillna(1)
+    
+    # Is Regular employment (binary - strongest single attrition predictor)
+    df['Is_Regular'] = (df['Employment_Type'] == 'Regular').astype(int)
+    
+    # Performance rating as numeric (Needs Improvement: 1 -> Outstanding: 4)
+    perf_map = {'Needs Improvement': 1, 'Meets Expectations': 2,
+                'Exceeds Expectations': 3, 'Outstanding': 4}
+    df['Perf_Rating_Numeric'] = df['Performance_Rating'].map(perf_map).fillna(2)
+    
+    # Shift risk score (Graveyard 67% attrition -> Morning 50%)
+    shift_risk = {'Morning': 0, 'Afternoon': 1, 'Night': 2, 'Graveyard': 3}
+    df['Shift_Risk'] = df['Shift'].map(shift_risk).fillna(1)
+    
+    # Department salary median ratio (is employee over/underpaid vs dept?)
+    dept_median = df.groupby('Department')['Monthly_Salary_PHP'].transform('median')
+    df['Dept_Salary_Ratio'] = df['Monthly_Salary_PHP'] / dept_median.replace(0, 1)
+    
+    # Satisfaction × Performance interaction
+    df['Satisfaction_x_Performance'] = (
+        df['Job_Satisfaction_Score'] * df['Performance_Score']
+    )
+    
+    # Tenure × Number of Promotions interaction
+    df['Tenure_x_Promotions'] = df['Tenure_Years'] * df['Num_Promotions']
+    
+    # Absence rate normalized by tenure
+    df['Absence_Rate'] = df['Absences_YTD'] / tenure_safe
+    
+    # Salary × Satisfaction interaction (underpaid + unhappy = high attrition)
+    df['Salary_x_Satisfaction'] = (
+        df['Monthly_Salary_PHP'] / 10000 * df['Job_Satisfaction_Score']
+    )
+    
+    # Tenure × Education interaction (educated + tenured = higher salary)
+    edu_map = {'High School': 1, 'Vocational': 2, 'Bachelor': 3, 'Master': 4, 'PhD': 5}
+    df['Education_Numeric'] = df['Education_Level'].map(edu_map).fillna(3)
+    df['Tenure_x_Education'] = df['Tenure_Years'] * df['Education_Numeric']
+    
+    # Age minus expected age (based on tenure) - career gap indicator
+    df['Career_Start_Age'] = df['Age'] - df['Tenure_Years']
+    
+    # Career Stagnation Flag (No promotions after 5 years -> 97.5% attrition)
+    df['Stagnation_Flag'] = ((df['Num_Promotions'] == 0) & (df['Tenure_Years'] > 5)).astype(int)
+    
+    # Composite Attrition Risk Score (Domain rules - enhanced v2)
+    def calc_risk(row):
+        score = 0
+        if row['Employment_Type'] == 'Project-based': score += 4
+        elif row['Employment_Type'] == 'Contractual': score += 3
+        if row['Performance_Rating'] == 'Needs Improvement': score += 3
+        elif row['Performance_Rating'] == 'Meets Expectations': score += 1
+        if row['Num_Promotions'] == 0: score += 4
+        elif row['Num_Promotions'] <= 2: score += 2
+        if row['Tenure_Years'] <= 5: score += 3
+        elif row['Tenure_Years'] <= 10: score += 1
+        if row['Job_Satisfaction_Score'] <= 2: score += 2
+        elif row['Job_Satisfaction_Score'] <= 3: score += 1
+        if row['Work_Life_Balance_Score'] <= 2: score += 1
+        if row['Shift'] == 'Graveyard': score += 1
+        if row['Num_Promotions'] == 0 and row['Tenure_Years'] > 3: score += 3
+        return score
+    
+    df['Attrition_Risk_Score'] = df.apply(calc_risk, axis=1)
+    
+    # Stability Score - positive retention indicators
+    df['Stability_Score'] = (
+        df['Is_Regular'] * 4 +
+        np.minimum(df['Num_Promotions'], 8) +
+        np.minimum(df['Tenure_Years'] / 5, 6) +
+        df['Job_Satisfaction_Score'] / 2 +
+        df['Work_Life_Balance_Score'] / 2 +
+        df['High_Performer'] * 2
+    )
+    
+    print(f"  Core features: Hire_Year, Salary_Bracket, Age_Group, "
           f"High_Performer, Engagement_Score, Promotion_Rate, Overtime_Intensity")
+    print(f"  Advanced features: Tenure_Squared, Employment_Risk, Is_Regular, "
+          f"Perf_Rating_Numeric, Shift_Risk, Dept_Salary_Ratio, +9 interactions")
     print(f"  Total features now: {len(df.columns)}")
     
     return df

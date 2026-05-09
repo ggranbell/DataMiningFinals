@@ -61,10 +61,12 @@ from sklearn.metrics import (
 
 def build_regression_features(df):
     """
-    Build a proper feature matrix for regression using:
+     Build a proper feature matrix for regression using:
     - Numerical features as-is
     - Ordinal encoding for Education_Level and Performance_Rating
     - One-Hot Encoding for nominal categoricals (Department, Gender, etc.)
+    - Engineered interaction features from preprocessing
+    - Polynomial terms for top predictors (Tenure², Education²)
     
     Returns:
         X: Feature DataFrame
@@ -83,18 +85,42 @@ def build_regression_features(df):
     X_num = df[num_available].fillna(df[num_available].median())
     X_parts.append(X_num)
     
+    # --- Engineered features from preprocessing ---
+    engineered_cols = [
+        'Engagement_Score', 'Promotion_Rate', 'Employment_Risk', 'Is_Regular',
+        'Perf_Rating_Numeric', 'Shift_Risk', 'Tenure_Squared',
+        'Tenure_x_Promotions', 'Tenure_x_Education', 'Career_Start_Age',
+        'Education_Numeric', 'Satisfaction_x_Performance', 'Absence_Rate'
+    ]
+    for col in engineered_cols:
+        if col in df.columns:
+            X_parts.append(df[col].fillna(0).to_frame(col))
+    
     # --- Ordinal features (natural ordering exists) ---
-    if 'Education_Level' in df.columns:
+    if 'Education_Level' in df.columns and 'Education_Numeric' not in df.columns:
         edu_map = {'High School': 1, 'Vocational': 2, 'Bachelor': 3, 'Master': 4, 'PhD': 5}
         X_parts.append(df['Education_Level'].map(edu_map).fillna(3).to_frame('Education_Ordinal'))
     
-    if 'Performance_Rating' in df.columns:
+    if 'Performance_Rating' in df.columns and 'Perf_Rating_Numeric' not in df.columns:
         perf_map = {'Needs Improvement': 1, 'Meets Expectations': 2,
                     'Exceeds Expectations': 3, 'Outstanding': 4}
         X_parts.append(df['Performance_Rating'].map(perf_map).fillna(2).to_frame('PerfRating_Ordinal'))
     
+    # --- Polynomial terms for top salary predictors ---
+    if 'Education_Numeric' in df.columns:
+        X_parts.append((df['Education_Numeric'].fillna(3) ** 2).to_frame('Education_Squared'))
+    
+    if 'Num_Promotions' in df.columns:
+        X_parts.append((df['Num_Promotions'].fillna(0) ** 2).to_frame('Promotions_Squared'))
+    
+    if 'Age' in df.columns and 'Education_Numeric' in df.columns:
+        X_parts.append((df['Age'].fillna(df['Age'].median()) * df['Education_Numeric'].fillna(3)).to_frame('Age_x_Education'))
+    
+    # Promotions × Education interaction (educated employees get promoted faster)
+    if 'Num_Promotions' in df.columns and 'Education_Numeric' in df.columns:
+        X_parts.append((df['Num_Promotions'].fillna(0) * df['Education_Numeric'].fillna(3)).to_frame('Promo_x_Education'))
+    
     # --- One-Hot Encoding for NOMINAL categoricals ---
-    # This is the critical fix: these have NO natural order
     nominal_cols = ['Department', 'Gender', 'Employment_Type', 'Shift',
                     'Marital_Status', 'Region']
     
@@ -102,17 +128,13 @@ def build_regression_features(df):
         if col in df.columns:
             dummies = pd.get_dummies(df[col], prefix=col, drop_first=True, dtype=int)
             X_parts.append(dummies)
-    
-    # --- Interaction features (domain knowledge) ---
-    if 'Tenure_Years' in df.columns and 'Education_Level' in df.columns:
-        edu_ord = df['Education_Level'].map(
-            {'High School': 1, 'Vocational': 2, 'Bachelor': 3, 'Master': 4, 'PhD': 5}
-        ).fillna(3)
-        X_parts.append((df['Tenure_Years'].fillna(df['Tenure_Years'].median()) * edu_ord).to_frame('Tenure_x_Education'))
-    
-    if 'Num_Promotions' in df.columns and 'Tenure_Years' in df.columns:
-        tenure = df['Tenure_Years'].fillna(df['Tenure_Years'].median()).replace(0, 0.5)
-        X_parts.append((df['Num_Promotions'].fillna(0) / tenure).to_frame('Promotion_Rate'))
+            
+            # Department × Tenure and Department × Education interactions
+            # (salary growth rates differ significantly by department)
+            if col == 'Department':
+                for d_col in dummies.columns:
+                    X_parts.append((dummies[d_col] * df['Tenure_Years'].fillna(0)).to_frame(f'{d_col}_x_Tenure'))
+                    X_parts.append((dummies[d_col] * df['Education_Numeric'].fillna(3)).to_frame(f'{d_col}_x_Edu'))
     
     X = pd.concat(X_parts, axis=1)
     X = X.fillna(0)

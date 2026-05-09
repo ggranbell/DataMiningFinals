@@ -37,18 +37,24 @@ import pandas as pd
 import numpy as np
 import json
 import os
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, RobustScaler, QuantileTransformer
 from sklearn.metrics import silhouette_score, calinski_harabasz_score, davies_bouldin_score
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 from scipy.spatial.distance import pdist
 
 
 def get_clustering_features():
-    """Define features used for hierarchical clustering."""
+    """
+    Define features used for hierarchical clustering.
+    
+    Uses a focused subset of high-separation features to maximize
+    cluster quality (silhouette score). Performance and Satisfaction
+    provide the strongest natural segmentation, supplemented by
+    Salary and Tenure for career-stage differentiation.
+    """
     return [
-        'Monthly_Salary_PHP', 'Performance_Score', 'Tenure_Years', 'Age',
-        'Training_Hours_YTD', 'Absences_YTD', 'Overtime_Hours_Monthly',
-        'Job_Satisfaction_Score', 'Work_Life_Balance_Score', 'Num_Promotions'
+        'Monthly_Salary_PHP', 'Performance_Score', 
+        'Tenure_Years', 'Job_Satisfaction_Score'
     ]
 
 
@@ -90,34 +96,55 @@ def run_hierarchical_clustering(df_clean, output_dir):
     # ========================================================================
     # 2. SCALE FEATURES
     # ========================================================================
-    print("\n[2] Scaling features (StandardScaler)...")
+    print("\n[2] Transforming features (QuantileTransformer - Normal)...")
     
-    scaler = StandardScaler()
+    # QuantileTransformer makes the data normal, which improves distance metrics
+    scaler = QuantileTransformer(output_distribution='normal', n_quantiles=1000, random_state=42)
     X_scaled = scaler.fit_transform(X)
     X_sample_scaled = scaler.transform(X_sample)
     
-    print(f"    Features scaled: {len(feature_cols)}")
+    print(f"    Features transformed: {len(feature_cols)}")
     
     # ========================================================================
-    # 3. COMPUTE LINKAGE MATRIX
+    # 3. COMPUTE LINKAGE & FIND BEST METHOD
     # ========================================================================
-    print("\n[3] Computing linkage matrix (Ward's method)...")
+    print("\n[3] Testing linkage methods (Ward, Complete, Average)...")
     
-    linkage_matrix = linkage(X_sample_scaled, method='ward', metric='euclidean')
-    
-    print(f"    Linkage method: Ward (minimizes within-cluster variance)")
-    print(f"    Distance metric: Euclidean")
-    print(f"    Linkage matrix shape: {linkage_matrix.shape}")
-    
-    # ========================================================================
-    # 4. DETERMINE OPTIMAL CLUSTERS (Silhouette Analysis)
-    # ========================================================================
-    print("\n[4] Finding optimal number of clusters...")
+    linkage_methods = ['ward', 'complete', 'average']
+    best_sil = -1
+    best_method = 'ward'
+    best_k = 2
     
     silhouette_scores = {}
     ch_scores = {}
     db_scores = {}
     
+    for method in linkage_methods:
+        linkage_matrix = linkage(X_sample_scaled, method=method, metric='euclidean')
+        
+        for k in range(2, 8):
+            labels = fcluster(linkage_matrix, k, criterion='maxclust')
+            
+            # Reject degenerate clusters (any cluster < 5% of data)
+            min_cluster_pct = min(np.bincount(labels)[1:]) / len(labels)
+            if min_cluster_pct < 0.05:
+                print(f"    {method:>8s} k={k}: SKIPPED (smallest cluster = {min_cluster_pct:.1%})")
+                continue
+            
+            sil = silhouette_score(X_sample_scaled, labels)
+            ch = calinski_harabasz_score(X_sample_scaled, labels)
+            db = davies_bouldin_score(X_sample_scaled, labels)
+            
+            if sil > best_sil:
+                best_sil = sil
+                best_method = method
+                best_k = k
+            
+            print(f"    {method:>8s} k={k}: Silhouette={sil:.4f}, CH={ch:.1f}, DB={db:.4f}")
+        print()
+    
+    # Recompute scores for the best method
+    linkage_matrix = linkage(X_sample_scaled, method=best_method, metric='euclidean')
     for k in range(2, 8):
         labels = fcluster(linkage_matrix, k, criterion='maxclust')
         sil = silhouette_score(X_sample_scaled, labels)
@@ -126,18 +153,17 @@ def run_hierarchical_clustering(df_clean, output_dir):
         silhouette_scores[k] = float(sil)
         ch_scores[k] = float(ch)
         db_scores[k] = float(db)
-        print(f"    k={k}: Silhouette={sil:.4f}, Calinski-Harabasz={ch:.1f}, Davies-Bouldin={db:.4f}")
     
-    optimal_k = max(silhouette_scores, key=silhouette_scores.get)
-    print(f"\n    → Optimal clusters (best silhouette): {optimal_k}")
+    optimal_k = best_k
+    print(f"    → Best: {best_method} linkage with k={best_k} (silhouette={best_sil:.4f})")
     
     # ========================================================================
-    # 5. ASSIGN CLUSTERS TO FULL DATASET
+    # 4. ASSIGN CLUSTERS TO FULL DATASET
     # ========================================================================
-    print(f"\n[5] Assigning {optimal_k} clusters to full dataset...")
+    print(f"\n[4] Assigning {optimal_k} clusters to full dataset...")
     
-    # Use full-dataset linkage for final assignment
-    full_linkage = linkage(X_scaled, method='ward', metric='euclidean')
+    # Use full-dataset linkage with the best method for final assignment
+    full_linkage = linkage(X_scaled, method=best_method, metric='euclidean')
     cluster_labels = fcluster(full_linkage, optimal_k, criterion='maxclust')
     df_clustered = df_clean.copy()
     df_clustered['Cluster'] = cluster_labels
@@ -148,12 +174,17 @@ def run_hierarchical_clustering(df_clean, output_dir):
         print(f"    Cluster {c}: {count} employees ({pct:.1f}%)")
     
     # ========================================================================
-    # 6. CLUSTER PROFILING
+    # 5. CLUSTER PROFILING
     # ========================================================================
-    print("\n[6] Cluster Profiling:")
+    print("\n[5] Cluster Profiling:")
     
     profiles = {}
-    profile_data = df_clustered.groupby('Cluster')[feature_cols].mean()
+    # Profile using all available HR metrics, not just clustering features
+    profile_cols = ['Monthly_Salary_PHP', 'Performance_Score', 'Tenure_Years', 'Age',
+                    'Training_Hours_YTD', 'Absences_YTD', 'Overtime_Hours_Monthly',
+                    'Job_Satisfaction_Score', 'Work_Life_Balance_Score', 'Num_Promotions']
+    available_profile_cols = [c for c in profile_cols if c in df_clustered.columns]
+    profile_data = df_clustered.groupby('Cluster')[available_profile_cols].mean()
     
     # Also compute attrition rate per cluster
     attrition_by_cluster = df_clustered.groupby('Cluster')['Attrition'].mean()
@@ -168,16 +199,16 @@ def run_hierarchical_clustering(df_clean, output_dir):
         profile = {
             'cluster_id': int(cluster_id),
             'size': int((df_clustered['Cluster'] == cluster_id).sum()),
-            'avg_salary': float(row['Monthly_Salary_PHP']),
-            'avg_performance': float(row['Performance_Score']),
-            'avg_tenure': float(row['Tenure_Years']),
-            'avg_age': float(row['Age']),
-            'avg_training': float(row['Training_Hours_YTD']),
-            'avg_absences': float(row['Absences_YTD']),
-            'avg_overtime': float(row['Overtime_Hours_Monthly']),
-            'avg_satisfaction': float(row['Job_Satisfaction_Score']),
-            'avg_wlb': float(row['Work_Life_Balance_Score']),
-            'avg_promotions': float(row['Num_Promotions']),
+            'avg_salary': float(row.get('Monthly_Salary_PHP', 0)),
+            'avg_performance': float(row.get('Performance_Score', 0)),
+            'avg_tenure': float(row.get('Tenure_Years', 0)),
+            'avg_age': float(row.get('Age', 0)),
+            'avg_training': float(row.get('Training_Hours_YTD', 0)),
+            'avg_absences': float(row.get('Absences_YTD', 0)),
+            'avg_overtime': float(row.get('Overtime_Hours_Monthly', 0)),
+            'avg_satisfaction': float(row.get('Job_Satisfaction_Score', 0)),
+            'avg_wlb': float(row.get('Work_Life_Balance_Score', 0)),
+            'avg_promotions': float(row.get('Num_Promotions', 0)),
             'attrition_rate': float(attrition_rate),
         }
         
@@ -185,16 +216,16 @@ def run_hierarchical_clustering(df_clean, output_dir):
         profile['segment_label'] = _generate_segment_label(profile)
         profiles[int(cluster_id)] = profile
         
-        print(f"    {cluster_id:<10} ₱{row['Monthly_Salary_PHP']:>9,.0f} "
-              f"{row['Performance_Score']:>6.2f} "
-              f"{row['Tenure_Years']:>6.1f} "
-              f"{row['Job_Satisfaction_Score']:>6.2f} "
+        print(f"    {cluster_id:<10} ₱{row.get('Monthly_Salary_PHP', 0):>9,.0f} "
+              f"{row.get('Performance_Score', 0):>6.2f} "
+              f"{row.get('Tenure_Years', 0):>6.1f} "
+              f"{row.get('Job_Satisfaction_Score', 0):>6.2f} "
               f"{attrition_rate:>8.1%}")
     
     # ========================================================================
     # 7. CLUSTER LABELS AND INSIGHTS
     # ========================================================================
-    print("\n[7] Segment Labels:")
+    print("\n[6] Segment Labels:")
     for cid, prof in profiles.items():
         print(f"    Cluster {cid}: {prof['segment_label']}")
         print(f"      → Size: {prof['size']}, Attrition: {prof['attrition_rate']:.1%}")
@@ -202,7 +233,7 @@ def run_hierarchical_clustering(df_clean, output_dir):
     # ========================================================================
     # 8. CATEGORICAL DISTRIBUTION PER CLUSTER
     # ========================================================================
-    print("\n[8] Categorical distributions per cluster:")
+    print("\n[7] Categorical distributions per cluster:")
     cat_distributions = {}
     for col in ['Department', 'Gender', 'Education_Level', 'Employment_Type']:
         if col in df_clustered.columns:
@@ -217,7 +248,7 @@ def run_hierarchical_clustering(df_clean, output_dir):
     # ========================================================================
     results = {
         'model': 'Hierarchical Clustering (Agglomerative)',
-        'linkage_method': 'Ward',
+        'linkage_method': best_method.capitalize(),
         'distance_metric': 'Euclidean',
         'optimal_clusters': optimal_k,
         'silhouette_scores': silhouette_scores,

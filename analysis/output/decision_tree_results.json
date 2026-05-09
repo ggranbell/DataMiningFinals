@@ -5,114 +5,114 @@
     "class_weight": null,
     "criterion": "entropy",
     "max_depth": 5,
-    "min_samples_leaf": 10,
-    "min_samples_split": 2
+    "min_samples_leaf": 5,
+    "min_samples_split": 20
   },
   "metrics": {
-    "accuracy": 0.768,
-    "precision": 0.7663398692810458,
-    "recall": 0.8405017921146953,
-    "f1_score": 0.8017094017094017,
-    "roc_auc": 0.83079517994129
+    "accuracy": 0.772,
+    "precision": 0.7768456375838926,
+    "recall": 0.8297491039426523,
+    "f1_score": 0.8024263431542461,
+    "roc_auc": 0.8477330965471382
   },
   "confusion_matrix": [
     [
-      299,
-      143
+      309,
+      133
     ],
     [
-      89,
-      469
+      95,
+      463
     ]
   ],
   "cv_scores": [
-    0.7992926613616269,
-    0.8170515097690941,
-    0.7839285714285714,
-    0.8134991119005328,
-    0.7981566820276498
+    0.8102383053839365,
+    0.8251748251748252,
+    0.8137687555163283,
+    0.8124474348191758,
+    0.8181818181818182
   ],
-  "cv_mean": 0.802385707297495,
-  "cv_std": 0.011888742375752536,
+  "cv_mean": 0.8159622278152169,
+  "cv_std": 0.005286339187681729,
   "feature_importance": [
     {
-      "feature": "Num_Promotions",
-      "importance": 0.6762794110942792
+      "feature": "Stability_Score",
+      "importance": 0.8008394134712369
     },
     {
-      "feature": "Employment_Type_Regular",
-      "importance": 0.1033941465410407
-    },
-    {
-      "feature": "Job_Satisfaction_Score",
-      "importance": 0.06812490633814648
+      "feature": "Attrition_Risk_Score",
+      "importance": 0.06382074486235145
     },
     {
       "feature": "Engagement_Score",
-      "importance": 0.06522814882349492
-    },
-    {
-      "feature": "Prev_Companies",
-      "importance": 0.024716747194076575
-    },
-    {
-      "feature": "Tenure_Years",
-      "importance": 0.01729664473393026
+      "importance": 0.026619510228458657
     },
     {
       "feature": "Absences_YTD",
-      "importance": 0.01639357481260048
+      "importance": 0.017449466348762
     },
     {
-      "feature": "Shift_Graveyard",
-      "importance": 0.013224225538450709
+      "feature": "Absence_Rate",
+      "importance": 0.017211654937651595
     },
     {
-      "feature": "Department_IT",
-      "importance": 0.005568112525071349
+      "feature": "Shift_Risk",
+      "importance": 0.010350816877710974
+    },
+    {
+      "feature": "Job_Satisfaction_Score",
+      "importance": 0.009051322062179831
+    },
+    {
+      "feature": "Tenure_x_Promotions",
+      "importance": 0.008848644663938024
+    },
+    {
+      "feature": "Satisfaction_x_Performance",
+      "importance": 0.007454355222684954
+    },
+    {
+      "feature": "Tenure_x_Education",
+      "importance": 0.007360246890836131
+    },
+    {
+      "feature": "Prev_Companies",
+      "importance": 0.005891322932698161
     },
     {
       "feature": "Work_Life_Balance_Score",
-      "importance": 0.0036685755414540156
+      "importance": 0.0050205947203524545
     },
     {
-      "feature": "Overtime_Hours_Monthly",
-      "importance": 0.0031617274835103316
+      "feature": "Career_Start_Age",
+      "importance": 0.00411371725957298
     },
     {
-      "feature": "Distance_Office_KM",
-      "importance": 0.002943779373945081
+      "feature": "Salary_x_Satisfaction",
+      "importance": 0.003897762633694067
+    },
+    {
+      "feature": "Tenure_Squared",
+      "importance": 0.0036032183969287885
+    },
+    {
+      "feature": "Dept_Salary_Ratio",
+      "importance": 0.0032334134855870576
+    },
+    {
+      "feature": "Region_Region I",
+      "importance": 0.002889435381896817
+    },
+    {
+      "feature": "Promotion_Rate",
+      "importance": 0.0023443596234590837
     },
     {
       "feature": "Age",
       "importance": 0.0
     },
     {
-      "feature": "Monthly_Salary_PHP",
-      "importance": 0.0
-    },
-    {
-      "feature": "Performance_Score",
-      "importance": 0.0
-    },
-    {
-      "feature": "Training_Hours_YTD",
-      "importance": 0.0
-    },
-    {
-      "feature": "Promotion_Rate",
-      "importance": 0.0
-    },
-    {
-      "feature": "Education_Ordinal",
-      "importance": 0.0
-    },
-    {
-      "feature": "PerfRating_Ordinal",
-      "importance": 0.0
-    },
-    {
-      "feature": "Department_Finance",
+      "feature": "Tenure_Years",
       "importance": 0.0
     }
   ],
@@ -120,5 +120,5 @@
     "stay": 2209,
     "leave": 2791
   },
-  "tree_rules": "|--- Num_Promotions <= 3.50\n|   |--- Num_Promotions <= 1.50\n|   |   |--- Engagement_Score <= 4.33\n|   |   |   |--- Employment_Type_Regular <= 0.50\n|   |   |   |   |--- class: 1\n|   |   |   |--- Employment_Type_Regular >  0.50\n|   |   |   |   |--- class: 1\n|   |   |--- Engagement_Score >  4.33\n|   |   |   |--- Employment_Type_Regular <= 0.50\n|   |   |   |   |--- class: 1\n|   |   |   |--- Employment_Type_Regular >  0.50\n|   |   |   |   |--- class: 1\n|   |--- Num_Promotions >  1.50\n|   |   |--- Employment_Type_Regular <= 0.50\n|   |   |   |--- Job_Satisfaction_Score <= 3.85\n|   |   |   |   |--- class: 1\n|   |   |   |--- Job_Satisfaction_Score >  3.85\n|   |   |   |   |--- class: 1\n|   |   |--- Employment_Type_Regular >  0.50\n|   |   |   |--- Engagement_Score <= 4.08\n|   |   |   |   |--- class: 1\n|   |   |   |--- Engagement_Score >  4.08\n|   |   |   |   |--- class: 0\n|--- Num_Promotions >  3.50\n|   |--- Num_Promotions <= 5.50\n|   |   |--- Employment_Type_Regular <= 0.50\n|   |   |   |--- Job_Satisfaction_Score <= 5.25\n|   |   |   |   |--- class: 1\n|   |   |   |--- Job_Satisfaction_Score >  5.25\n|   |   |   |   |--- class: 0\n|   |   |--- Employment_Type_Regular >  0.50\n|   |   |   |--- Job_Satisfaction_Score <= 6.05\n|   |   |   |   |--- class: 0\n|   |   |   |--- Job_Satisfaction_Score >  6.05\n|   |   |   |   |--- class: 0\n|   |--- Num_Promotions >  5.50\n|   |   |--- Job_Satisfaction_Score <= 2.75\n|   |   |   |--- Tenure_Years <= 27.80\n|   |   |   |   |--- class: 1\n|   |   |   |--- Tenure_Years >  27.80\n|   |   |   |   |--- class: 0\n|   |   |--- Job_Satisfaction_Score >  2.75\n|   |   |   |--- Prev_Companies <= 0.50\n|   |   |   |   |--- class: 0\n|   |   |   |--- Prev_Companies >  0.50\n|   |   |   |   |--- class: 0\n"
+  "tree_rules": "|--- Stability_Score <= 13.73\n|   |--- Attrition_Risk_Score <= 7.50\n|   |   |--- Absences_YTD <= 15.50\n|   |   |   |--- Stability_Score <= 10.52\n|   |   |   |   |--- class: 1\n|   |   |   |--- Stability_Score >  10.52\n|   |   |   |   |--- class: 1\n|   |   |--- Absences_YTD >  15.50\n|   |   |   |--- Salary_x_Satisfaction <= 21.41\n|   |   |   |   |--- class: 1\n|   |   |   |--- Salary_x_Satisfaction >  21.41\n|   |   |   |   |--- class: 1\n|   |--- Attrition_Risk_Score >  7.50\n|   |   |--- Engagement_Score <= 3.98\n|   |   |   |--- Tenure_x_Promotions <= 13.65\n|   |   |   |   |--- class: 1\n|   |   |   |--- Tenure_x_Promotions >  13.65\n|   |   |   |   |--- class: 1\n|   |   |--- Engagement_Score >  3.98\n|   |   |   |--- Career_Start_Age <= 22.40\n|   |   |   |   |--- class: 1\n|   |   |   |--- Career_Start_Age >  22.40\n|   |   |   |   |--- class: 1\n|--- Stability_Score >  13.73\n|   |--- Stability_Score <= 17.63\n|   |   |--- Stability_Score <= 15.24\n|   |   |   |--- Work_Life_Balance_Score <= 3.45\n|   |   |   |   |--- class: 1\n|   |   |   |--- Work_Life_Balance_Score >  3.45\n|   |   |   |   |--- class: 0\n|   |   |--- Stability_Score >  15.24\n|   |   |   |--- Job_Satisfaction_Score <= 5.55\n|   |   |   |   |--- class: 0\n|   |   |   |--- Job_Satisfaction_Score >  5.55\n|   |   |   |   |--- class: 0\n|   |--- Stability_Score >  17.63\n|   |   |--- Stability_Score <= 23.98\n|   |   |   |--- Engagement_Score <= 4.88\n|   |   |   |   |--- class: 0\n|   |   |   |--- Engagement_Score >  4.88\n|   |   |   |   |--- class: 0\n|   |   |--- Stability_Score >  23.98\n|   |   |   |--- class: 0\n"
 }

@@ -67,25 +67,31 @@ def build_classification_features(df):
     X_num = df[num_available].fillna(df[num_available].median())
     X_parts.append(X_num)
     
-    # --- Derived features ---
-    if 'Job_Satisfaction_Score' in df.columns and 'Work_Life_Balance_Score' in df.columns:
-        engagement = (df['Job_Satisfaction_Score'].fillna(df['Job_Satisfaction_Score'].median()) +
-                      df['Work_Life_Balance_Score'].fillna(df['Work_Life_Balance_Score'].median())) / 2
-        X_parts.append(engagement.to_frame('Engagement_Score'))
-    
-    if 'Num_Promotions' in df.columns and 'Tenure_Years' in df.columns:
-        tenure = df['Tenure_Years'].fillna(df['Tenure_Years'].median()).replace(0, 0.5)
-        X_parts.append((df['Num_Promotions'].fillna(0) / tenure).to_frame('Promotion_Rate'))
+    # --- Engineered features from preprocessing ---
+    engineered_cols = [
+        'Engagement_Score', 'Promotion_Rate', 'Employment_Risk', 'Is_Regular',
+        'Perf_Rating_Numeric', 'Shift_Risk', 'Dept_Salary_Ratio',
+        'Satisfaction_x_Performance', 'Tenure_x_Promotions', 'Absence_Rate',
+        'Salary_x_Satisfaction', 'Tenure_x_Education', 'Career_Start_Age',
+        'Tenure_Squared', 'Salary_Per_Tenure', 'Education_Numeric',
+        'Attrition_Risk_Score', 'Stagnation_Flag', 'High_Performer',
+        'Stability_Score'
+    ]
+    for col in engineered_cols:
+        if col in df.columns:
+            X_parts.append(df[col].fillna(0).to_frame(col))
     
     # --- Ordinal features ---
     if 'Education_Level' in df.columns:
         edu_map = {'High School': 1, 'Vocational': 2, 'Bachelor': 3, 'Master': 4, 'PhD': 5}
-        X_parts.append(df['Education_Level'].map(edu_map).fillna(3).to_frame('Education_Ordinal'))
+        if 'Education_Numeric' not in df.columns:
+            X_parts.append(df['Education_Level'].map(edu_map).fillna(3).to_frame('Education_Ordinal'))
     
     if 'Performance_Rating' in df.columns:
         perf_map = {'Needs Improvement': 1, 'Meets Expectations': 2,
                     'Exceeds Expectations': 3, 'Outstanding': 4}
-        X_parts.append(df['Performance_Rating'].map(perf_map).fillna(2).to_frame('PerfRating_Ordinal'))
+        if 'Perf_Rating_Numeric' not in df.columns:
+            X_parts.append(df['Performance_Rating'].map(perf_map).fillna(2).to_frame('PerfRating_Ordinal'))
     
     # --- One-Hot Encoding for nominal categoricals ---
     nominal_cols = ['Department', 'Gender', 'Employment_Type', 'Shift',

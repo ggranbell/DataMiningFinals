@@ -76,7 +76,7 @@ function renderDemographics(s){
   // Department
   if(cs.Department){
     const labels=Object.keys(cs.Department);const vals=Object.values(cs.Department);
-    new Chart(document.getElementById('deptChart'),{type:'bar',data:{labels,datasets:[{label:'Count',data:vals,backgroundColor:PALETTE.map(c=>c+'66'),borderColor:PALETTE,borderWidth:1.5,borderRadius:6}]},options:{...chartDefaults,indexAxis:'horizontal',plugins:{...chartDefaults.plugins,legend:{display:false}}}});
+    new Chart(document.getElementById('deptChart'),{type:'bar',data:{labels,datasets:[{label:'Count',data:vals,backgroundColor:PALETTE.map(c=>c+'66'),borderColor:PALETTE,borderWidth:1.5,borderRadius:6}]},options:{...chartDefaults,indexAxis:'y',plugins:{...chartDefaults.plugins,legend:{display:false}}}});
   }
   // Education
   if(cs.Education_Level){
@@ -91,7 +91,7 @@ function renderDemographics(s){
   // Region
   if(cs.Region){
     const labels=Object.keys(cs.Region);const vals=Object.values(cs.Region);
-    new Chart(document.getElementById('regionChart'),{type:'bar',data:{labels,datasets:[{label:'Count',data:vals,backgroundColor:COLORS.cyan+'55',borderColor:COLORS.cyan,borderWidth:1.5,borderRadius:6}]},options:{...chartDefaults,indexAxis:'horizontal',plugins:{...chartDefaults.plugins,legend:{display:false}}}});
+    new Chart(document.getElementById('regionChart'),{type:'bar',data:{labels,datasets:[{label:'Count',data:vals,backgroundColor:COLORS.cyan+'55',borderColor:COLORS.cyan,borderWidth:1.5,borderRadius:6}]},options:{...chartDefaults,indexAxis:'y',plugins:{...chartDefaults.plugins,legend:{display:false}}}});
   }
   // Employment Type
   if(cs.Employment_Type){
@@ -149,7 +149,7 @@ function renderDecisionTree(dt){
 
   // Feature importance
   const topFeat=dt.feature_importance.slice(0,12);
-  new Chart(document.getElementById('featureImpChart'),{type:'bar',data:{labels:topFeat.map(f=>f.feature),datasets:[{label:'Importance',data:topFeat.map(f=>f.importance),backgroundColor:topFeat.map((_,i)=>PALETTE[i%PALETTE.length]+'77'),borderColor:topFeat.map((_,i)=>PALETTE[i%PALETTE.length]),borderWidth:1.5,borderRadius:6}]},options:{...chartDefaults,indexAxis:'horizontal',plugins:{...chartDefaults.plugins,legend:{display:false}}}});
+  new Chart(document.getElementById('featureImpChart'),{type:'bar',data:{labels:topFeat.map(f=>f.feature),datasets:[{label:'Importance',data:topFeat.map(f=>f.importance),backgroundColor:topFeat.map((_,i)=>PALETTE[i%PALETTE.length]+'77'),borderColor:topFeat.map((_,i)=>PALETTE[i%PALETTE.length]),borderWidth:1.5,borderRadius:6}]},options:{...chartDefaults,indexAxis:'y',plugins:{...chartDefaults.plugins,legend:{display:false}}}});
 
   // Confusion matrix
   const cm=dt.confusion_matrix;const total=cm[0][0]+cm[0][1]+cm[1][0]+cm[1][1];
@@ -237,7 +237,7 @@ function renderRegression(reg){
     {label:'Ridge',data:ridgeCoefs.map(c=>c.coefficient),backgroundColor:COLORS.purple+'55',borderColor:COLORS.purple,borderWidth:1.5,borderRadius:4},
     {label:'Lasso',data:featNames.map(f=>lassoMap[f]||0),backgroundColor:COLORS.cyan+'55',borderColor:COLORS.cyan,borderWidth:1.5,borderRadius:4},
     {label:'Elastic Net',data:featNames.map(f=>enetMap[f]||0),backgroundColor:COLORS.emerald+'55',borderColor:COLORS.emerald,borderWidth:1.5,borderRadius:4}
-  ]},options:{...chartDefaults,indexAxis:'horizontal'}});
+  ]},options:{...chartDefaults,indexAxis:'y'}});
 
   // Lasso feature selection
   const lassoCoefs=models.lasso.coefficients;

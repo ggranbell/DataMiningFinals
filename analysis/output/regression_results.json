@@ -2,9 +2,9 @@
   "analysis": "Regularized Regression - Salary Prediction",
   "target": "Monthly_Salary_PHP",
   "target_stats": {
-    "mean": 45153.95,
+    "mean": 45151.75,
     "median": 43500.0,
-    "std": 13552.638558505867
+    "std": 13552.149624229362
   },
   "feature_columns": [
     "Age",
@@ -18,457 +18,457 @@
     "Work_Life_Balance_Score",
     "Num_Promotions",
     "Prev_Companies",
-    "Education_Ordinal",
-    "PerfRating_Ordinal",
-    "Department_Finance",
-    "Department_HR",
-    "Department_IT",
-    "Department_Legal/Compliance",
-    "Department_Marketing",
-    "Department_Operations",
-    "Department_Sales"
+    "Engagement_Score",
+    "Promotion_Rate",
+    "Employment_Risk",
+    "Is_Regular",
+    "Perf_Rating_Numeric",
+    "Shift_Risk",
+    "Tenure_Squared",
+    "Tenure_x_Promotions",
+    "Tenure_x_Education"
   ],
-  "total_features": 38,
+  "total_features": 80,
   "models": {
     "ridge": {
       "model_name": "Ridge",
-      "alpha": 14.174741629268048,
-      "r2": 0.8639367039951255,
-      "adjusted_r2": 0.8585564696057548,
-      "mae": 4114.506233640778,
-      "rmse": 5093.097618345136,
+      "alpha": 7.054802310718645,
+      "r2": 0.9071641950226824,
+      "adjusted_r2": 0.8990827321302064,
+      "mae": 3321.4084001783326,
+      "rmse": 4207.027807672947,
       "cv_r2_scores": [
-        0.8674136403250222,
-        0.8599650932344094,
-        0.8797685109450845,
-        0.8611609014862036,
-        0.8510278254443444
+        0.9008487119981109,
+        0.9074510709657729,
+        0.9178482318353988,
+        0.9055037627541606,
+        0.9021270820435177
       ],
-      "cv_r2_mean": 0.8638671942870128,
-      "cv_r2_std": 0.009516606081868724,
+      "cv_r2_mean": 0.9067557719193922,
+      "cv_r2_std": 0.0060234834038547114,
       "coefficients": [
         {
-          "feature": "Education_Ordinal",
-          "coefficient": 6685.662194268533,
-          "abs_coefficient": 6685.662194268533,
+          "feature": "Education_Squared",
+          "coefficient": 12263.772762607208,
+          "abs_coefficient": 12263.772762607208,
           "is_zero": false
         },
         {
-          "feature": "Department_IT",
-          "coefficient": 5855.447765752932,
-          "abs_coefficient": 5855.447765752932,
+          "feature": "Education_Numeric",
+          "coefficient": -4402.77268549548,
+          "abs_coefficient": 4402.77268549548,
           "is_zero": false
         },
         {
-          "feature": "Tenure_Years",
-          "coefficient": 5155.02162695536,
-          "abs_coefficient": 5155.02162695536,
-          "is_zero": false
-        },
-        {
-          "feature": "Department_Finance",
-          "coefficient": 4266.492580084351,
-          "abs_coefficient": 4266.492580084351,
-          "is_zero": false
-        },
-        {
-          "feature": "Department_Marketing",
-          "coefficient": 2744.792733418892,
-          "abs_coefficient": 2744.792733418892,
-          "is_zero": false
-        },
-        {
-          "feature": "Department_Legal/Compliance",
-          "coefficient": 2742.9728612525714,
-          "abs_coefficient": 2742.9728612525714,
-          "is_zero": false
-        },
-        {
-          "feature": "Tenure_x_Education",
-          "coefficient": 755.6363194005058,
-          "abs_coefficient": 755.6363194005058,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_NCR",
-          "coefficient": 627.3759063923046,
-          "abs_coefficient": 627.3759063923046,
-          "is_zero": false
-        },
-        {
-          "feature": "PerfRating_Ordinal",
-          "coefficient": -453.4571708094931,
-          "abs_coefficient": 453.4571708094931,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region IV-A",
-          "coefficient": 443.1788359070019,
-          "abs_coefficient": 443.1788359070019,
-          "is_zero": false
-        },
-        {
-          "feature": "Distance_Office_KM",
-          "coefficient": 374.28294325915545,
-          "abs_coefficient": 374.28294325915545,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region III",
-          "coefficient": 368.47391702037737,
-          "abs_coefficient": 368.47391702037737,
-          "is_zero": false
-        },
-        {
-          "feature": "Performance_Score",
-          "coefficient": 331.2439649368658,
-          "abs_coefficient": 331.2439649368658,
-          "is_zero": false
-        },
-        {
-          "feature": "Employment_Type_Project-based",
-          "coefficient": 176.26561117338292,
-          "abs_coefficient": 176.26561117338292,
+          "feature": "Department_Operations",
+          "coefficient": -4220.827314548526,
+          "abs_coefficient": 4220.827314548526,
           "is_zero": false
         },
         {
           "feature": "Department_Sales",
-          "coefficient": -165.07574310506195,
-          "abs_coefficient": 165.07574310506195,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region VI",
-          "coefficient": 163.47220876294256,
-          "abs_coefficient": 163.47220876294256,
-          "is_zero": false
-        },
-        {
-          "feature": "Marital_Status_Widowed",
-          "coefficient": 132.91181271238375,
-          "abs_coefficient": 132.91181271238375,
-          "is_zero": false
-        },
-        {
-          "feature": "Overtime_Hours_Monthly",
-          "coefficient": -125.16109248838582,
-          "abs_coefficient": 125.16109248838582,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region I",
-          "coefficient": 107.36712670885682,
-          "abs_coefficient": 107.36712670885682,
-          "is_zero": false
-        },
-        {
-          "feature": "Shift_Graveyard",
-          "coefficient": 106.57943152048588,
-          "abs_coefficient": 106.57943152048588,
-          "is_zero": false
-        }
-      ],
-      "intercept": 45128.0625
-    },
-    "lasso": {
-      "model_name": "Lasso",
-      "alpha": 54.62277217684343,
-      "r2": 0.8644283973881799,
-      "adjusted_r2": 0.8590676056095647,
-      "mae": 4096.9396733822905,
-      "rmse": 5083.886798742198,
-      "cv_r2_scores": [
-        0.8687889524737329,
-        0.8616629052680314,
-        0.8787800098204036,
-        0.8608742472247768,
-        0.8526321353883929
-      ],
-      "cv_r2_mean": 0.8645476500350675,
-      "cv_r2_std": 0.008767483576354082,
-      "coefficients": [
-        {
-          "feature": "Education_Ordinal",
-          "coefficient": 6710.2508624163565,
-          "abs_coefficient": 6710.2508624163565,
-          "is_zero": false
-        },
-        {
-          "feature": "Department_IT",
-          "coefficient": 5832.4104007580645,
-          "abs_coefficient": 5832.4104007580645,
+          "coefficient": -3951.749855616028,
+          "abs_coefficient": 3951.749855616028,
           "is_zero": false
         },
         {
           "feature": "Tenure_Years",
-          "coefficient": 5389.274340425106,
-          "abs_coefficient": 5389.274340425106,
+          "coefficient": 3781.875579932223,
+          "abs_coefficient": 3781.875579932223,
           "is_zero": false
         },
         {
-          "feature": "Department_Finance",
-          "coefficient": 4217.7473214208485,
-          "abs_coefficient": 4217.7473214208485,
+          "feature": "Department_Customer Service",
+          "coefficient": -2971.963425892412,
+          "abs_coefficient": 2971.963425892412,
           "is_zero": false
         },
         {
-          "feature": "Department_Marketing",
-          "coefficient": 2712.309886473286,
-          "abs_coefficient": 2712.309886473286,
+          "feature": "Department_HR",
+          "coefficient": -2357.6287083867387,
+          "abs_coefficient": 2357.6287083867387,
           "is_zero": false
         },
         {
-          "feature": "Department_Legal/Compliance",
-          "coefficient": 2705.5299964661344,
-          "abs_coefficient": 2705.5299964661344,
-          "is_zero": false
-        },
-        {
-          "feature": "Tenure_x_Education",
-          "coefficient": 636.8533202499175,
-          "abs_coefficient": 636.8533202499175,
-          "is_zero": false
-        },
-        {
-          "feature": "Employment_Type_Project-based",
-          "coefficient": 118.23444029866452,
-          "abs_coefficient": 118.23444029866452,
-          "is_zero": false
-        },
-        {
-          "feature": "Overtime_Hours_Monthly",
-          "coefficient": -95.3260003943709,
-          "abs_coefficient": 95.3260003943709,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region XI",
-          "coefficient": -90.88167588374841,
-          "abs_coefficient": 90.88167588374841,
-          "is_zero": false
-        },
-        {
-          "feature": "Department_Sales",
-          "coefficient": -84.70883804404212,
-          "abs_coefficient": 84.70883804404212,
-          "is_zero": false
-        },
-        {
-          "feature": "Marital_Status_Widowed",
-          "coefficient": 82.910939517935,
-          "abs_coefficient": 82.910939517935,
-          "is_zero": false
-        },
-        {
-          "feature": "PerfRating_Ordinal",
-          "coefficient": -64.72109176595002,
-          "abs_coefficient": 64.72109176595002,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region VI",
-          "coefficient": 44.417328510410776,
-          "abs_coefficient": 44.417328510410776,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_NCR",
-          "coefficient": 29.53227098219182,
-          "abs_coefficient": 29.53227098219182,
-          "is_zero": false
-        },
-        {
-          "feature": "Absences_YTD",
-          "coefficient": -19.353285895484248,
-          "abs_coefficient": 19.353285895484248,
-          "is_zero": false
-        },
-        {
-          "feature": "Shift_Morning",
-          "coefficient": 8.344817527189143,
-          "abs_coefficient": 8.344817527189143,
-          "is_zero": false
-        },
-        {
-          "feature": "Shift_Graveyard",
-          "coefficient": 5.8307012359319765,
-          "abs_coefficient": 5.8307012359319765,
-          "is_zero": false
-        },
-        {
-          "feature": "Training_Hours_YTD",
-          "coefficient": -1.2312028146345246,
-          "abs_coefficient": 1.2312028146345246,
+          "feature": "Department_IT",
+          "coefficient": 2313.3646789629165,
+          "abs_coefficient": 2313.3646789629165,
           "is_zero": false
         },
         {
           "feature": "Age",
-          "coefficient": 0.0,
-          "abs_coefficient": 0.0,
-          "is_zero": true
-        }
-      ],
-      "intercept": 45128.0625,
-      "features_eliminated": 19,
-      "features_retained": 19
-    },
-    "elastic_net": {
-      "model_name": "ElasticNet",
-      "alpha": 0.01,
-      "r2": 0.8640630015495864,
-      "adjusted_r2": 0.8586877612362506,
-      "mae": 4108.92862905062,
-      "rmse": 5090.733295520842,
-      "cv_r2_scores": [
-        0.8674367688890624,
-        0.8598037774136973,
-        0.8798378854641385,
-        0.861167602300199,
-        0.8514674271786083
-      ],
-      "cv_r2_mean": 0.8639426922491411,
-      "cv_r2_std": 0.00943747548582327,
-      "coefficients": [
-        {
-          "feature": "Education_Ordinal",
-          "coefficient": 6861.47186202837,
-          "abs_coefficient": 6861.47186202837,
+          "coefficient": 1800.423438403097,
+          "abs_coefficient": 1800.423438403097,
           "is_zero": false
         },
         {
-          "feature": "Department_IT",
-          "coefficient": 5904.298211576693,
-          "abs_coefficient": 5904.298211576693,
-          "is_zero": false
-        },
-        {
-          "feature": "Tenure_Years",
-          "coefficient": 5656.693817769309,
-          "abs_coefficient": 5656.693817769309,
+          "feature": "Tenure_x_Promotions",
+          "coefficient": -1546.5135928141103,
+          "abs_coefficient": 1546.5135928141103,
           "is_zero": false
         },
         {
           "feature": "Department_Finance",
-          "coefficient": 4295.927239406422,
-          "abs_coefficient": 4295.927239406422,
+          "coefficient": 1493.7491128471008,
+          "abs_coefficient": 1493.7491128471008,
           "is_zero": false
         },
         {
-          "feature": "Department_Marketing",
-          "coefficient": 2788.768444035221,
-          "abs_coefficient": 2788.768444035221,
+          "feature": "Career_Start_Age",
+          "coefficient": -1407.3789064082766,
+          "abs_coefficient": 1407.3789064082766,
           "is_zero": false
         },
         {
-          "feature": "Department_Legal/Compliance",
-          "coefficient": 2777.604059079985,
-          "abs_coefficient": 2777.604059079985,
+          "feature": "Satisfaction_x_Performance",
+          "coefficient": -1207.6866010437814,
+          "abs_coefficient": 1207.6866010437814,
           "is_zero": false
         },
         {
-          "feature": "Region_NCR",
-          "coefficient": 690.9837871065143,
-          "abs_coefficient": 690.9837871065143,
+          "feature": "Num_Promotions",
+          "coefficient": 1172.021061590691,
+          "abs_coefficient": 1172.021061590691,
           "is_zero": false
         },
         {
-          "feature": "Region_Region IV-A",
-          "coefficient": 497.31685451957196,
-          "abs_coefficient": 497.31685451957196,
+          "feature": "Department_Operations_x_Edu",
+          "coefficient": -1102.7785308873972,
+          "abs_coefficient": 1102.7785308873972,
           "is_zero": false
         },
         {
-          "feature": "PerfRating_Ordinal",
-          "coefficient": -483.0166944900701,
-          "abs_coefficient": 483.0166944900701,
+          "feature": "Department_Customer Service_x_Edu",
+          "coefficient": -959.5504345314199,
+          "abs_coefficient": 959.5504345314199,
           "is_zero": false
         },
         {
           "feature": "Tenure_x_Education",
-          "coefficient": 438.1376043960383,
-          "abs_coefficient": 438.1376043960383,
+          "coefficient": 957.6688221264716,
+          "abs_coefficient": 957.6688221264716,
           "is_zero": false
         },
         {
-          "feature": "Region_Region III",
-          "coefficient": 414.0228185513388,
-          "abs_coefficient": 414.0228185513388,
+          "feature": "Department_Sales_x_Edu",
+          "coefficient": -926.3250728408394,
+          "abs_coefficient": 926.3250728408394,
           "is_zero": false
         },
         {
-          "feature": "Distance_Office_KM",
-          "coefficient": 413.2782890739484,
-          "abs_coefficient": 413.2782890739484,
+          "feature": "Department_HR_x_Edu",
+          "coefficient": -734.9608251518282,
+          "abs_coefficient": 734.9608251518282,
           "is_zero": false
         },
         {
-          "feature": "Performance_Score",
-          "coefficient": 411.9135227234657,
-          "abs_coefficient": 411.9135227234657,
-          "is_zero": false
-        },
-        {
-          "feature": "Employment_Type_Project-based",
-          "coefficient": 186.69257568421196,
-          "abs_coefficient": 186.69257568421196,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region VI",
-          "coefficient": 172.99841879386017,
-          "abs_coefficient": 172.99841879386017,
-          "is_zero": false
-        },
-        {
-          "feature": "Marital_Status_Widowed",
-          "coefficient": 132.73223145932167,
-          "abs_coefficient": 132.73223145932167,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region I",
-          "coefficient": 121.17424886023313,
-          "abs_coefficient": 121.17424886023313,
-          "is_zero": false
-        },
-        {
-          "feature": "Overtime_Hours_Monthly",
-          "coefficient": -113.59411191378743,
-          "abs_coefficient": 113.59411191378743,
-          "is_zero": false
-        },
-        {
-          "feature": "Region_Region VII",
-          "coefficient": 110.5965945833856,
-          "abs_coefficient": 110.5965945833856,
-          "is_zero": false
-        },
-        {
-          "feature": "Shift_Graveyard",
-          "coefficient": 109.50594815175032,
-          "abs_coefficient": 109.50594815175032,
+          "feature": "Department_Marketing_x_Edu",
+          "coefficient": -717.7309989835524,
+          "abs_coefficient": 717.7309989835524,
           "is_zero": false
         }
       ],
-      "intercept": 45128.0625,
+      "intercept": 45125.3125
+    },
+    "lasso": {
+      "model_name": "Lasso",
+      "alpha": 15.199110829529332,
+      "r2": 0.9110381144508277,
+      "adjusted_r2": 0.9032938806707039,
+      "mae": 3281.0512607300698,
+      "rmse": 4118.315538501774,
+      "cv_r2_scores": [
+        0.9066854334263365,
+        0.9073284543938431,
+        0.919563474204098,
+        0.9059669957167557,
+        0.9026320506340754
+      ],
+      "cv_r2_mean": 0.9084352816750216,
+      "cv_r2_std": 0.0057947153609880465,
+      "coefficients": [
+        {
+          "feature": "Education_Squared",
+          "coefficient": 12222.417538892538,
+          "abs_coefficient": 12222.417538892538,
+          "is_zero": false
+        },
+        {
+          "feature": "Tenure_Years",
+          "coefficient": 5451.459430638748,
+          "abs_coefficient": 5451.459430638748,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Operations",
+          "coefficient": -5021.191611379953,
+          "abs_coefficient": 5021.191611379953,
+          "is_zero": false
+        },
+        {
+          "feature": "Education_Numeric",
+          "coefficient": -4873.19609602891,
+          "abs_coefficient": 4873.19609602891,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Sales",
+          "coefficient": -4638.01273589956,
+          "abs_coefficient": 4638.01273589956,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Customer Service",
+          "coefficient": -3573.2322784536314,
+          "abs_coefficient": 3573.2322784536314,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_HR",
+          "coefficient": -2859.1996357917124,
+          "abs_coefficient": 2859.1996357917124,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_IT",
+          "coefficient": 1769.501679779637,
+          "abs_coefficient": 1769.501679779637,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Finance",
+          "coefficient": 814.1771262378004,
+          "abs_coefficient": 814.1771262378004,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Human Resources",
+          "coefficient": -466.4957911857083,
+          "abs_coefficient": 466.4957911857083,
+          "is_zero": false
+        },
+        {
+          "feature": "Satisfaction_x_Performance",
+          "coefficient": -423.2756045450007,
+          "abs_coefficient": 423.2756045450007,
+          "is_zero": false
+        },
+        {
+          "feature": "Tenure_x_Education",
+          "coefficient": 409.8187506762018,
+          "abs_coefficient": 409.8187506762018,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Marketing",
+          "coefficient": -370.49932979913774,
+          "abs_coefficient": 370.49932979913774,
+          "is_zero": false
+        },
+        {
+          "feature": "Job_Satisfaction_Score",
+          "coefficient": 330.0970250498592,
+          "abs_coefficient": 330.0970250498592,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Customer Service_x_Edu",
+          "coefficient": -329.2459733007625,
+          "abs_coefficient": 329.2459733007625,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Operations_x_Edu",
+          "coefficient": -303.8468844330483,
+          "abs_coefficient": 303.8468844330483,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_H.R.",
+          "coefficient": -246.84586427500045,
+          "abs_coefficient": 246.84586427500045,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_HR_x_Tenure",
+          "coefficient": -228.60909211111664,
+          "abs_coefficient": 228.60909211111664,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Marketing_x_Edu",
+          "coefficient": -221.94516024214332,
+          "abs_coefficient": 221.94516024214332,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_HR_x_Edu",
+          "coefficient": -207.7549857665836,
+          "abs_coefficient": 207.7549857665836,
+          "is_zero": false
+        }
+      ],
+      "intercept": 45125.3125,
+      "features_eliminated": 31,
+      "features_retained": 49
+    },
+    "elastic_net": {
+      "model_name": "ElasticNet",
+      "alpha": 0.06428073117284319,
+      "r2": 0.9085972276387583,
+      "adjusted_r2": 0.9006405118728178,
+      "mae": 3316.117002340831,
+      "rmse": 4174.431252581848,
+      "cv_r2_scores": [
+        0.9021344729037113,
+        0.9072042624706937,
+        0.9186412981078161,
+        0.9050980575244821,
+        0.9013991135701616
+      ],
+      "cv_r2_mean": 0.9068954409153729,
+      "cv_r2_std": 0.006231653868531762,
+      "coefficients": [
+        {
+          "feature": "Education_Squared",
+          "coefficient": 11813.801793239734,
+          "abs_coefficient": 11813.801793239734,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Operations",
+          "coefficient": -3950.883988391363,
+          "abs_coefficient": 3950.883988391363,
+          "is_zero": false
+        },
+        {
+          "feature": "Education_Numeric",
+          "coefficient": -3816.9880712746112,
+          "abs_coefficient": 3816.9880712746112,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Sales",
+          "coefficient": -3721.195244659689,
+          "abs_coefficient": 3721.195244659689,
+          "is_zero": false
+        },
+        {
+          "feature": "Tenure_Years",
+          "coefficient": 3623.3208026875323,
+          "abs_coefficient": 3623.3208026875323,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Customer Service",
+          "coefficient": -2765.488032253735,
+          "abs_coefficient": 2765.488032253735,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_IT",
+          "coefficient": 2408.713344749534,
+          "abs_coefficient": 2408.713344749534,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_HR",
+          "coefficient": -2180.4857407482823,
+          "abs_coefficient": 2180.4857407482823,
+          "is_zero": false
+        },
+        {
+          "feature": "Age",
+          "coefficient": 1730.7108572726256,
+          "abs_coefficient": 1730.7108572726256,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Finance",
+          "coefficient": 1590.447250321576,
+          "abs_coefficient": 1590.447250321576,
+          "is_zero": false
+        },
+        {
+          "feature": "Career_Start_Age",
+          "coefficient": -1316.7440871752053,
+          "abs_coefficient": 1316.7440871752053,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Operations_x_Edu",
+          "coefficient": -1298.8162623772653,
+          "abs_coefficient": 1298.8162623772653,
+          "is_zero": false
+        },
+        {
+          "feature": "Tenure_x_Promotions",
+          "coefficient": -1253.426152772441,
+          "abs_coefficient": 1253.426152772441,
+          "is_zero": false
+        },
+        {
+          "feature": "Num_Promotions",
+          "coefficient": 1219.1723307495615,
+          "abs_coefficient": 1219.1723307495615,
+          "is_zero": false
+        },
+        {
+          "feature": "Satisfaction_x_Performance",
+          "coefficient": -1103.5676679017674,
+          "abs_coefficient": 1103.5676679017674,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Customer Service_x_Edu",
+          "coefficient": -1103.1928402784283,
+          "abs_coefficient": 1103.1928402784283,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Sales_x_Edu",
+          "coefficient": -1095.8101790525684,
+          "abs_coefficient": 1095.8101790525684,
+          "is_zero": false
+        },
+        {
+          "feature": "Tenure_x_Education",
+          "coefficient": 911.3156523186874,
+          "abs_coefficient": 911.3156523186874,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_HR_x_Edu",
+          "coefficient": -862.8880845685946,
+          "abs_coefficient": 862.8880845685946,
+          "is_zero": false
+        },
+        {
+          "feature": "Department_Marketing_x_Edu",
+          "coefficient": -794.753076188467,
+          "abs_coefficient": 794.753076188467,
+          "is_zero": false
+        }
+      ],
+      "intercept": 45125.3125,
       "best_l1_ratio": 0.95,
-      "features_eliminated": 0,
-      "features_retained": 38
+      "features_eliminated": 2,
+      "features_retained": 78
     }
   },
   "best_model": "Lasso",
   "comparison": {
     "Ridge": {
-      "r2": 0.8639367039951255,
-      "mae": 4114.506233640778
+      "r2": 0.9071641950226824,
+      "mae": 3321.4084001783326
     },
     "Lasso": {
-      "r2": 0.8644283973881799,
-      "mae": 4096.9396733822905
+      "r2": 0.9110381144508277,
+      "mae": 3281.0512607300698
     },
     "Elastic Net": {
-      "r2": 0.8640630015495864,
-      "mae": 4108.92862905062
+      "r2": 0.9085972276387583,
+      "mae": 3316.117002340831
     }
   }
 }
