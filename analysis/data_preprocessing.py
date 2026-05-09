@@ -102,25 +102,54 @@ def fix_typographical_inconsistencies(df):
     df = df.copy()
     
     # --- Department standardization ---
+    # We found many variations in the raw data that need to be grouped
     dept_mapping = {
-        'SALES': 'Sales',
-        'sales': 'Sales',
-        'Saless': 'Sales',
+        # IT variations
+        'it': 'IT',
         'I.T.': 'IT',
         'i.t.': 'IT',
+        'Information Technology': 'IT',
+        
+        # HR variations
+        'hr': 'HR',
+        'H.R.': 'HR',
+        'h.r.': 'HR',
+        'Human Resources': 'HR',
+        
+        # Finance variations
         'finance': 'Finance',
         'FINANCE': 'Finance',
-        'hr': 'HR',
-        'Ops': 'Operations',
-        'Operationsn': 'Operations',
-        'OPERATIONS': 'Operations',
+        'Fiance': 'Finance', # Common typo
+        
+        # Operations variations
         'operations': 'Operations',
+        'OPERATIONS': 'Operations',
+        'Ops': 'Operations',
+        'Operationsn': 'Operations', # Common typo
+        
+        # Sales variations
+        'sales': 'Sales',
+        'SALES': 'Sales',
+        'Saless': 'Sales', # Common typo
     }
     
     original_depts = df['Department'].unique()
+    # Initial cleanup: strip whitespace and handle known mappings
     df['Department'] = df['Department'].str.strip()
+    
+    # We apply mapping first, then check case-insensitive matches for safety
     df['Department'] = df['Department'].replace(dept_mapping)
-    # Title case any remaining inconsistencies (but preserve known abbreviations)
+    
+    # Second pass: ensure everything is properly title-cased except known abbreviations
+    def final_cleanup(d):
+        if pd.isna(d): return d
+        # Standardize known abbreviations to uppercase
+        if d.upper() in ['IT', 'HR']:
+            return d.upper()
+        # Everything else to Title Case
+        return d.title()
+        
+    df['Department'] = df['Department'].apply(final_cleanup)
     fixed_depts = df['Department'].unique()
     
     changes = set(original_depts) - set(fixed_depts)

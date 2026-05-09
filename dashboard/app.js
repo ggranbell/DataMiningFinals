@@ -20,7 +20,10 @@ function kpiCard(label,value,subtitle,accent){
   return `<div class="kpi-card accent-${accent}"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-subtitle">${subtitle}</div></div>`;
 }
 
-function loadJSON(path){return fetch(path).then(r=>r.json()).catch(()=>null);}
+function loadJSON(path){
+  const timestamp = new Date().getTime();
+  return fetch(`${path}?v=${timestamp}`).then(r=>r.json()).catch(()=>null);
+}
 
 async function init(){
   const [summary,dtRes,clusterRes,regRes]=await Promise.all([

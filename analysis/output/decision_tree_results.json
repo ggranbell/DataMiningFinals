@@ -9,20 +9,20 @@
     "min_samples_split": 20
   },
   "metrics": {
-    "accuracy": 0.772,
-    "precision": 0.7768456375838926,
-    "recall": 0.8297491039426523,
-    "f1_score": 0.8024263431542461,
-    "roc_auc": 0.8477330965471382
+    "accuracy": 0.774,
+    "precision": 0.7813559322033898,
+    "recall": 0.8261648745519713,
+    "f1_score": 0.8031358885017421,
+    "roc_auc": 0.8492880195916249
   },
   "confusion_matrix": [
     [
-      309,
-      133
+      313,
+      129
     ],
     [
-      95,
-      463
+      97,
+      461
     ]
   ],
   "cv_scores": [
@@ -37,82 +37,82 @@
   "feature_importance": [
     {
       "feature": "Stability_Score",
-      "importance": 0.8008394134712369
+      "importance": 0.8005715208319444
     },
     {
       "feature": "Attrition_Risk_Score",
-      "importance": 0.06382074486235145
+      "importance": 0.06379939587840387
     },
     {
       "feature": "Engagement_Score",
-      "importance": 0.026619510228458657
+      "importance": 0.02661060560821667
     },
     {
       "feature": "Absences_YTD",
-      "importance": 0.017449466348762
+      "importance": 0.017443629243949495
     },
     {
       "feature": "Absence_Rate",
-      "importance": 0.017211654937651595
+      "importance": 0.017205897384276626
     },
     {
       "feature": "Shift_Risk",
-      "importance": 0.010350816877710974
+      "importance": 0.0103473543762337
     },
     {
       "feature": "Job_Satisfaction_Score",
-      "importance": 0.009051322062179831
-    },
-    {
-      "feature": "Tenure_x_Promotions",
-      "importance": 0.008848644663938024
+      "importance": 0.009048294260955846
     },
     {
       "feature": "Satisfaction_x_Performance",
-      "importance": 0.007454355222684954
+      "importance": 0.007451861630509997
     },
     {
       "feature": "Tenure_x_Education",
-      "importance": 0.007360246890836131
+      "importance": 0.007357784779291341
     },
     {
       "feature": "Prev_Companies",
-      "importance": 0.005891322932698161
+      "importance": 0.005889352197963061
     },
     {
       "feature": "Work_Life_Balance_Score",
-      "importance": 0.0050205947203524545
+      "importance": 0.005018915257094492
+    },
+    {
+      "feature": "Monthly_Salary_PHP",
+      "importance": 0.004934584722023209
+    },
+    {
+      "feature": "Tenure_x_Promotions",
+      "importance": 0.004245614743105658
     },
     {
       "feature": "Career_Start_Age",
-      "importance": 0.00411371725957298
+      "importance": 0.004112341160250903
     },
     {
       "feature": "Salary_x_Satisfaction",
-      "importance": 0.003897762633694067
+      "importance": 0.0038964587743913013
     },
     {
       "feature": "Tenure_Squared",
-      "importance": 0.0036032183969287885
+      "importance": 0.003602013067033602
     },
     {
       "feature": "Dept_Salary_Ratio",
-      "importance": 0.0032334134855870576
+      "importance": 0.003232331860909242
     },
     {
       "feature": "Region_Region I",
-      "importance": 0.002889435381896817
+      "importance": 0.002888468822986878
     },
     {
       "feature": "Promotion_Rate",
-      "importance": 0.0023443596234590837
+      "importance": 0.0023435754004595476
     },
     {
       "feature": "Age",
-      "importance": 0.0
-    },
-    {
-      "feature": "Tenure_Years",
       "importance": 0.0
     }
   ],

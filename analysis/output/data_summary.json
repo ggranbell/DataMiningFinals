@@ -17,9 +17,9 @@
       "max": 30.0
     },
     "Monthly_Salary_PHP": {
-      "mean": 45151.75,
+      "mean": 45153.95,
       "median": 43500.0,
-      "std": 13553.505042507913,
+      "std": 13553.994025685184,
       "min": 15000.0,
       "max": 101500.0
     },
@@ -119,16 +119,11 @@
       "Operations": 1283,
       "Sales": 904,
       "Customer Service": 627,
-      "IT": 609,
-      "Finance": 453,
+      "IT": 617,
+      "Finance": 459,
       "Marketing": 450,
-      "HR": 396,
-      "Compliance": 256,
-      "Fiance": 6,
-      "Human Resources": 5,
-      "it": 4,
-      "Information Technology": 4,
-      "H.R.": 3
+      "HR": 404,
+      "Compliance": 256
     },
     "Employment_Type": {
       "Regular": 2941,
